@@ -65,7 +65,7 @@ class RunResults(object):
 
 RunStats = namedtuple(
     'RunStats', ['count', 'total_time', 'rps', 'avg', 'min',
-                 'max', 'amp', 'stdev'])
+                 'max', 'amp', 'stdev', 'server'])
 
 
 def calc_stats(results):
