@@ -158,7 +158,7 @@ def print_json(results, url):
     import json
     res = requests.head(url)
     stats = calc_stats(results)
-    stats['server'] = res.headers.get('server', 'Unknown')
+    stats.server = res.headers.get('server', 'Unknown')
     print(json.dumps(stats._asdict()))
 
 
