@@ -153,10 +153,12 @@ def print_errors(errors):
         print(error)
 
 
-def print_json(results):
+def print_json(results, url):
     """Prints a JSON representation of the results to stdout."""
     import json
+    res = requests.head(url)
     stats = calc_stats(results)
+    stats['server'] = res.headers.get('server', 'Unknown')
     print(json.dumps(stats._asdict()))
 
 
@@ -424,7 +426,7 @@ def main():
         print_errors(res.errors)
         print_stats(res)
     else:
-        print_json(res)
+        print_json(res, url)
 
     logger.info('Bye!')
 
