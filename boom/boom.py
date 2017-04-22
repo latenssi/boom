@@ -95,7 +95,7 @@ def calc_stats(results):
         stdev = math.sqrt(sum((x-avg)**2 for x in all_res) / count)
 
     return (
-        RunStats(count, results.total_time, rps, avg, min_, max_, amp, stdev)
+        RunStats(count, results.total_time, rps, avg, min_, max_, amp, stdev, 'Unknown')
     )
 
 
