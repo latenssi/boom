@@ -65,10 +65,10 @@ class RunResults(object):
 
 RunStats = namedtuple(
     'RunStats', ['count', 'total_time', 'rps', 'avg', 'min',
-                 'max', 'amp', 'stdev', 'server'])
+                 'max', 'amp', 'stdev', 'server', 'number', 'concurrency'])
 
 
-def calc_stats(results, url):
+def calc_stats(results, url, number, concurrency):
     """Calculate stats (min, max, avg) from the given RunResults.
 
        The statistics are returned as a RunStats object.
@@ -96,12 +96,12 @@ def calc_stats(results, url):
         stdev = math.sqrt(sum((x-avg)**2 for x in all_res) / count)
 
     return (
-        RunStats(count, results.total_time, rps, avg, min_, max_, amp, stdev, server_info)
+        RunStats(count, results.total_time, rps, avg, min_, max_, amp, stdev, server_info, number, concurrency)
     )
 
 
-def print_stats(results, url):
-    stats = calc_stats(results, url)
+def print_stats(results, url, number, concurrency):
+    stats = calc_stats(results, url, number, concurrency)
     rps = stats.rps
 
     print('')
@@ -154,10 +154,10 @@ def print_errors(errors):
         print(error)
 
 
-def print_json(results, url):
+def print_json(results, url, number, concurrency):
     """Prints a JSON representation of the results to stdout."""
     import json
-    stats = calc_stats(results, url)
+    stats = calc_stats(results, url, number, concurrency)
     print(json.dumps(stats._asdict()))
 
 
@@ -423,9 +423,9 @@ def main():
 
     if not args.json_output:
         print_errors(res.errors)
-        print_stats(res, url)
+        print_stats(res, url, args.requests, args.concurrency)
     else:
-        print_json(res, url)
+        print_json(res, url, args.requests, args.concurrency)
 
     logger.info('Bye!')
 
